@@ -8,7 +8,9 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Button;
 import android.widget.RadioGroup;
+import android.widget.TextView;
 
 import hochschuledarmstadt.quizapp.QuizActivity;
 
@@ -18,20 +20,31 @@ public class MainActivity extends QuizActivity {
      * TODO: Hier weitere Variablen für die UI Komponenten anlegen
      */
     private RadioGroup radioGroup;
+    private Button button;
+    private TextView textView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_main_quiz);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         // TODO: Hier die erzeugten Views über "findViewById(...)" referenzieren
         // und gegebenenfalls Listener setzen
+        textView = (TextView) findViewById(R.id.Frage);
+        button = (Button) findViewById(R.id.submitButton);
         radioGroup = (RadioGroup) findViewById(R.id.radioGroup);
         radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup group, int checkedId) {
                 getQuiz().setCheckedRadioButtonId(checkedId);
+            }
+        });
+
+        button.setOnClickListener(new Button.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getQuiz().submitAnswer();
             }
         });
     }
