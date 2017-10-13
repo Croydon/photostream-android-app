@@ -8,45 +8,99 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.RadioGroup;
 
-public class MainQuizActivity extends AppCompatActivity {
+import hochschuledarmstadt.quizapp.QuizActivity;
+
+public class MainActivity extends QuizActivity {
+
+    /*
+     * TODO: Hier weitere Variablen für die UI Komponenten anlegen
+     */
+    private RadioGroup radioGroup;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main_quiz);
+        setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
+        // TODO: Hier die erzeugten Views über "findViewById(...)" referenzieren
+        // und gegebenenfalls Listener setzen
+        radioGroup = (RadioGroup) findViewById(R.id.radioGroup);
+        radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+            public void onCheckedChanged(RadioGroup group, int checkedId) {
+                getQuiz().setCheckedRadioButtonId(checkedId);
             }
         });
     }
 
+    /*
+	 * TODO: Methode definert eine mögliche Antwort an den Radio Button
+	 * an Position index
+	 */
     @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_main_quiz, menu);
-        return true;
+    public void renderPossibleAnswer(int index, String possibleAnswerText) {
+
+    }
+
+    /*
+	 * TODO: Methode löscht den gewählten Radio Button
+	 */
+    @Override
+    public void clearCheckedRadioButton() {
+
+    }
+
+    /*
+	 * TODO: Methode definiert die aktulle Frage in der TextView
+	 */
+    @Override
+    public void renderQuestion(String questionText) {
+
+    }
+
+    /*
+	 * TODO: Methode definiert einen Untertitel, der den Fortschritt
+	 * des Spiels angibt.
+	 */
+    @Override
+    public void renderActionBarSubtitle(String subtitleText) {
+
+    }
+
+
+    /*
+	 * TODO: Methode aktiviert den Button zur Übermittlung von Antworten
+	 */
+    @Override
+    public void setAnswerButtonEnabled() {
+
+    }
+
+    /*
+	 * TODO: Methode deaktiviert den Button zur Übermittlung von Antworten
+	 */
+    @Override
+    public void setAnswerButtonDisabled() {
+
+    }
+
+
+    /*
+	 * TODO: Methode wird aufgerufen, nachdem die letzte Frage beantwortet
+	 *       wurde.
+	 */
+    @Override
+    public void onQuizEnd(final int correctAnswers, final int wrongAnswers) {
+
     }
 
     @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
+    public int getIndexOfRadioButtonInRadioGroupFor(final int radioButtonId) {
+        View radioButton = radioGroup.findViewById(radioButtonId);
+        int positionOfRadioButtonInRadioGroup = radioGroup.indexOfChild(radioButton);
+        return positionOfRadioButtonInRadioGroup;
     }
 }
