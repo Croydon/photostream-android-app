@@ -19,9 +19,7 @@ import hochschuledarmstadt.quizapp.QuizActivity;
 
 public class MainQuizActivity extends QuizActivity {
 
-    /*
-     * TODO: Hier weitere Variablen für die UI Komponenten anlegen
-     */
+
     private RadioGroup radioGroup;
     private Button button;
     private TextView textView;
@@ -117,11 +115,16 @@ public class MainQuizActivity extends QuizActivity {
 
 
     /*
-	 * TODO: Methode wird aufgerufen, nachdem die letzte Frage beantwortet
+	 * Methode wird aufgerufen, nachdem die letzte Frage beantwortet
 	 *       wurde.
 	 */
     @Override
     public void onQuizEnd(final int correctAnswers, final int wrongAnswers) {
+
+        Intent intent = new Intent(this, QuizResultActivity.class);
+        intent.putExtra("correctAnswers",correctAnswers);
+        intent.putExtra("wrongAnswers",wrongAnswers);
+        startActivity(intent);
 
 
     }
