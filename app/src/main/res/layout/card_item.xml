@@ -3,11 +3,12 @@
               xmlns:tools="http://schemas.android.com/tools"
               android:orientation="vertical"
               android:layout_width="match_parent"
-              android:layout_height="match_parent">
+              android:layout_height="250dp">
 
     <android.support.v7.widget.CardView
         android:layout_width="match_parent"
-        android:layout_height="250dp">
+        android:layout_height="match_parent"
+       >
 
         <ImageView
             android:id="@+id/photo_in_stream_imageView"
@@ -26,7 +27,6 @@
                 android:layout_height="40dp"
                 android:layout_alignParentBottom="true"
                 android:background="#80000000"
-                android:text="user"
                 android:paddingLeft="8dp"
                 android:textColorHint="#FDFDFD"
                 android:textColor="#FDFDFD"

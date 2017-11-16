@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import hochschuledarmstadt.photostream_tools.adapter.BasePhotoAdapter;
 import hochschuledarmstadt.photostream_tools.model.Photo;
@@ -30,6 +31,7 @@ public class PhotoAdapter extends BasePhotoAdapter<PhotoViewHolder> {
         final Photo photo = getItemAtPosition(position);
         // Bitmap anhand des Photo Objekts laden und in der ImageView setzen
         loadBitmapIntoImageViewAsync(holder, holder.streamPhoto, photo);
+        holder.user.setText(photo.getDescription());
     }
 
     @Override
