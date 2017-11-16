@@ -1,17 +1,12 @@
 package h_da.fbi.khami.photostream;
 
-import android.content.ComponentName;
-import android.os.IBinder;
-import android.support.v7.app.AppCompatActivity;
+import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.RequiresApi;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
-import android.view.View;
-import android.widget.Adapter;
-import android.widget.AdapterView;
 
-import java.util.Iterator;
 import java.util.List;
 
 import hochschuledarmstadt.photostream_tools.IPhotoStreamClient;
@@ -23,14 +18,13 @@ import hochschuledarmstadt.photostream_tools.model.HttpError;
 import hochschuledarmstadt.photostream_tools.model.Photo;
 import hochschuledarmstadt.photostream_tools.model.PhotoQueryResult;
 
-import static android.icu.lang.UCharacter.GraphemeClusterBreak.L;
-
 public class MainActivity extends PhotoStreamActivity implements OnPhotosReceivedListener, OnRequestListener {
 
     RecyclerView recyclerView;
     PhotoAdapter adapter;
     LinearLayoutManager linearLayoutManager;
 
+    @RequiresApi(api = Build.VERSION_CODES.M)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -42,7 +36,28 @@ public class MainActivity extends PhotoStreamActivity implements OnPhotosReceive
          linearLayoutManager = new LinearLayoutManager(this,LinearLayoutManager.VERTICAL,false);
         recyclerView.setLayoutManager(linearLayoutManager);
 
+
+        recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener()
+        {
+            @Override
+            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+                super.onScrollStateChanged(recyclerView, newState);
+
+                IPhotoStreamClient photoStreamClient = getPhotoStreamClient();
+
+                if (newState ==  RecyclerView.SCROLL_STATE_SETTLING)
+                {
+                    if (!photoStreamClient.hasOpenRequestOfType(RequestType.LOAD_PHOTOS)) {
+                        // dann nächste Seite aus dem Stream laden
+                        photoStreamClient.loadMorePhotos();
+                    }
+                }
+
+            }
+        });
+
         recyclerView.setAdapter(adapter);
+
     }
 
     @Override
