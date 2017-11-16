@@ -9,6 +9,7 @@
     >
 
     <android.support.v7.widget.RecyclerView
+        android:id="@+id/stream_recyclerView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
@@ -20,6 +21,7 @@
         android:layout_width="56dp"
         android:layout_height="56dp"
         app:fabSize="normal"
+        android:id="@+id/add_photo_fab"
         android:layout_alignParentBottom="true"
         android:layout_alignParentRight="true"
         android:layout_marginBottom="@dimen/fab_margin"
