@@ -6,6 +6,7 @@ import android.support.annotation.RequiresApi;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.View;
 
 import java.util.List;
 
@@ -29,6 +30,7 @@ public class MainActivity extends PhotoStreamActivity implements OnPhotosReceive
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        
 
         adapter = new PhotoAdapter();
 
@@ -45,15 +47,17 @@ public class MainActivity extends PhotoStreamActivity implements OnPhotosReceive
 
                 IPhotoStreamClient photoStreamClient = getPhotoStreamClient();
 
-                if (newState ==  RecyclerView.SCROLL_STATE_SETTLING)
-                {
+                if(linearLayoutManager.findLastVisibleItemPosition()==recyclerView.getAdapter().getItemCount()-1){
+                    //findViewById(R.id.photo_loading_progressBar).setVisibility(View.VISIBLE);
                     if (!photoStreamClient.hasOpenRequestOfType(RequestType.LOAD_PHOTOS)) {
                         // dann nächste Seite aus dem Stream laden
                         photoStreamClient.loadMorePhotos();
                     }
                 }
 
+
             }
+
         });
 
         recyclerView.setAdapter(adapter);
@@ -105,12 +109,15 @@ public class MainActivity extends PhotoStreamActivity implements OnPhotosReceive
     @Override
     // OnRequestListener
     public void onRequestStarted() {
+        Log.d("in onrequeststarted", "true");
+        findViewById(R.id.photo_loading_progressBar).setVisibility(View.VISIBLE);
 
     }
 
     @Override
     // OnRequestListener
     public void onRequestFinished() {
+        findViewById(R.id.photo_loading_progressBar).setVisibility(View.GONE);
 
     }
 }
