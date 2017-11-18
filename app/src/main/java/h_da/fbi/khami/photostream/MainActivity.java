@@ -1,8 +1,10 @@
 package h_da.fbi.khami.photostream;
 
+import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.RequiresApi;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -24,6 +26,7 @@ public class MainActivity extends PhotoStreamActivity implements OnPhotosReceive
     RecyclerView recyclerView;
     PhotoAdapter adapter;
     LinearLayoutManager linearLayoutManager;
+    FloatingActionButton fab;
 
     @RequiresApi(api = Build.VERSION_CODES.M)
     @Override
@@ -35,7 +38,7 @@ public class MainActivity extends PhotoStreamActivity implements OnPhotosReceive
         adapter = new PhotoAdapter();
 
         recyclerView = (RecyclerView) findViewById(R.id.stream_recyclerView);
-         linearLayoutManager = new LinearLayoutManager(this,LinearLayoutManager.VERTICAL,false);
+        linearLayoutManager = new LinearLayoutManager(this,LinearLayoutManager.VERTICAL,false);
         recyclerView.setLayoutManager(linearLayoutManager);
 
 
@@ -62,6 +65,15 @@ public class MainActivity extends PhotoStreamActivity implements OnPhotosReceive
 
         recyclerView.setAdapter(adapter);
 
+        fab = (FloatingActionButton) findViewById(R.id.add_photo_fab);
+
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view)
+            {
+                startActivity(new Intent(MainActivity.this, UploadPhoto.class));
+            }
+        });
     }
 
     @Override
