@@ -19,7 +19,7 @@ public class UploadPhoto extends AppCompatActivity {
         // Inflate the menu; this adds items to the action bar if it is present
 
         MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.menu_main, menu);
+        inflater.inflate(R.menu.menu_photo_upload, menu);
         return true;
     }
 
@@ -32,5 +32,7 @@ public class UploadPhoto extends AppCompatActivity {
                 return true;
         }
 
+
+        return false;
     }
 }
