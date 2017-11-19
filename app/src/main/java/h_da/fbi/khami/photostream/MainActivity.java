@@ -50,10 +50,10 @@ public class MainActivity extends PhotoStreamActivity implements OnPhotosReceive
 
                 IPhotoStreamClient photoStreamClient = getPhotoStreamClient();
 
-                if(linearLayoutManager.findLastVisibleItemPosition()==recyclerView.getAdapter().getItemCount()-1){
+                if(linearLayoutManager.findLastVisibleItemPosition() == recyclerView.getAdapter().getItemCount()-1){
                     //findViewById(R.id.photo_loading_progressBar).setVisibility(View.VISIBLE);
                     if (!photoStreamClient.hasOpenRequestOfType(RequestType.LOAD_PHOTOS)) {
-                        // dann nächste Seite aus dem Stream laden
+                        // load next page of photos
                         photoStreamClient.loadMorePhotos();
                     }
                 }
@@ -76,6 +76,7 @@ public class MainActivity extends PhotoStreamActivity implements OnPhotosReceive
         });
     }
 
+
     @Override
     protected void onPhotoStreamServiceConnected(IPhotoStreamClient photoStreamClient, Bundle savedInstanceState) {
 
@@ -89,47 +90,46 @@ public class MainActivity extends PhotoStreamActivity implements OnPhotosReceive
     }
 
 
-
     @Override
     protected void onPhotoStreamServiceDisconnected(IPhotoStreamClient photoStreamClient) {
         photoStreamClient.removeOnRequestListener(this);
         photoStreamClient.removeOnPhotosReceivedListener(this);
     }
 
+
     @Override
     // OnPhotosReceivedListener
     public void onPhotosReceived(PhotoQueryResult result) {
         List<Photo> receivedPhotos = result.getPhotos();
         adapter.addAll(receivedPhotos);
-
-
-
     }
+
 
     @Override
     // OnPhotosReceivedListener
     public void onReceivePhotosFailed(HttpError httpError) {
-        Log.d("http error",httpError.getMessage()+"  "+ httpError.getResponseCode());
+        Log.d("http error",httpError.getResponseCode()+":  "+ httpError.getMessage());
     }
+
 
     @Override
     // OnPhotosReceivedListener
     public void onNoNewPhotosAvailable() {
-
+        // KEEP ME
     }
+
 
     @Override
     // OnRequestListener
     public void onRequestStarted() {
         Log.d("in onrequeststarted", "true");
         findViewById(R.id.photo_loading_progressBar).setVisibility(View.VISIBLE);
-
     }
+
 
     @Override
     // OnRequestListener
     public void onRequestFinished() {
         findViewById(R.id.photo_loading_progressBar).setVisibility(View.GONE);
-
     }
 }
