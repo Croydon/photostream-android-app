@@ -5,10 +5,6 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-/**
- * static machen wenn nichts laeuft
- */
-
 public class PhotoViewHolder extends RecyclerView.ViewHolder {
 
     public final ImageView streamPhoto;
@@ -22,8 +18,5 @@ public class PhotoViewHolder extends RecyclerView.ViewHolder {
         streamPhoto = (ImageView) itemView.findViewById(R.id.photo_in_stream_imageView);
         user = (TextView) itemView.findViewById(R.id.username_textView);
         star = (ImageView) itemView.findViewById(R.id.star_unchecked_imageView);
-
-
-
     }
 }
