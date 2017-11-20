@@ -112,7 +112,7 @@ public class UploadPhoto extends PhotoStreamActivity implements OnPhotoUploadLis
     {
         IPhotoStreamClient photoStreamClient = getPhotoStreamClient();
         try {
-            photoStreamClient.uploadPhoto(BitmapUtils.bitmapToBytes(selectedPhoto), descriptionPhoto.toString());
+            photoStreamClient.uploadPhoto(BitmapUtils.bitmapToBytes(selectedPhoto), descriptionPhoto.getText().toString());
         }
         catch(Exception e)
         {
@@ -139,7 +139,7 @@ public class UploadPhoto extends PhotoStreamActivity implements OnPhotoUploadLis
         photoStreamClient.addOnPhotoUploadListener(this);
         if (savedInstanceState != null){
             boolean uploadRequestIsRunning = photoStreamClient.hasOpenRequestOfType(RequestType.UPLOAD_PHOTO);
-            uploadButton.setEnabled(!uploadRequestIsRunning);
+            //uploadButton.setEnabled(!uploadRequestIsRunning);
         }
     }
 
@@ -150,7 +150,7 @@ public class UploadPhoto extends PhotoStreamActivity implements OnPhotoUploadLis
 
     @Override
     public void onPhotoUploaded(Photo photo) {
-        uploadButton.setEnabled(true);
+        // FIXME: uploadButton.setEnabled(true);
         // FIXME: When photo detail page is implemented, the users should get redirected there
         startActivity(new Intent(UploadPhoto.this, MainActivity.class));
     }
