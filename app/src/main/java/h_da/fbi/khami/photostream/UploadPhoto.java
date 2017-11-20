@@ -11,17 +11,25 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.Toast;
 
-import java.io.FileNotFoundException;
-import java.io.IOException;
+import hochschuledarmstadt.photostream_tools.BitmapUtils;
+import hochschuledarmstadt.photostream_tools.IPhotoStreamClient;
+import hochschuledarmstadt.photostream_tools.PhotoStreamActivity;
+import hochschuledarmstadt.photostream_tools.RequestType;
+import hochschuledarmstadt.photostream_tools.callback.OnPhotoUploadListener;
+import hochschuledarmstadt.photostream_tools.model.HttpError;
+import hochschuledarmstadt.photostream_tools.model.Photo;
 
-public class UploadPhoto extends AppCompatActivity {
+public class UploadPhoto extends PhotoStreamActivity implements OnPhotoUploadListener {
 
     static final int REQUEST_IMAGE_CAPTURE = 1;
     ImageView selectPhotoImageView;
     Bitmap selectedPhoto;
-
+    EditText descriptionPhoto;
+    MenuItem uploadButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,6 +39,8 @@ public class UploadPhoto extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         selectPhotoImageView = (ImageView) findViewById(R.id.select_photo_imageView);
+        descriptionPhoto = (EditText) findViewById(R.id.description_editText);
+        uploadButton = (MenuItem) findViewById(R.id.upload_photo_item);
 
         selectPhotoImageView.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
@@ -82,6 +92,10 @@ public class UploadPhoto extends AppCompatActivity {
             case android.R.id.home:
                 NavUtils.navigateUpFromSameTask(this);
                 return true;
+
+            case R.id.upload_photo_item:
+                uploadSelectedPhoto();
+                return true;
         }
 
         return super.onOptionsItemSelected(item);
@@ -91,6 +105,18 @@ public class UploadPhoto extends AppCompatActivity {
         Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
             startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE);
+        }
+    }
+
+    private void uploadSelectedPhoto()
+    {
+        IPhotoStreamClient photoStreamClient = getPhotoStreamClient();
+        try {
+            photoStreamClient.uploadPhoto(BitmapUtils.bitmapToBytes(selectedPhoto), descriptionPhoto.toString());
+        }
+        catch(Exception e)
+        {
+            // FIXME: Output an error to the user
         }
     }
 
@@ -107,4 +133,32 @@ public class UploadPhoto extends AppCompatActivity {
         selectedPhoto = newPhoto;
         selectPhotoImageView.setImageBitmap(selectedPhoto);
     }
+
+    @Override
+    protected void onPhotoStreamServiceConnected(IPhotoStreamClient photoStreamClient, Bundle savedInstanceState) {
+        photoStreamClient.addOnPhotoUploadListener(this);
+        if (savedInstanceState != null){
+            boolean uploadRequestIsRunning = photoStreamClient.hasOpenRequestOfType(RequestType.UPLOAD_PHOTO);
+            uploadButton.setEnabled(!uploadRequestIsRunning);
+        }
+    }
+
+    @Override
+    protected void onPhotoStreamServiceDisconnected(IPhotoStreamClient photoStreamClient) {
+        photoStreamClient.removeOnPhotoUploadListener(this);
+    }
+
+    @Override
+    public void onPhotoUploaded(Photo photo) {
+        uploadButton.setEnabled(true);
+        // FIXME: When photo detail page is implemented, the users should get redirected there
+        startActivity(new Intent(UploadPhoto.this, MainActivity.class));
+    }
+
+    @Override
+    public void onPhotoUploadFailed(HttpError httpError) {
+        // FIXME: Output error somehwere
+        uploadButton.setEnabled(true);
+    }
+
 }
