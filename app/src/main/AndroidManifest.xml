@@ -25,13 +25,22 @@
 
         <activity
             android:name=".UploadPhoto"
-            android:label="Upload new photos"
+            android:label="Upload photo"
             android:parentActivityName="h_da.fbi.khami.photostream.MainActivity">
             <!-- Parent activity meta-data to support 4.0 and lower -->
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="h_da.fbi.khami.photostream.MainActivity" />
+
+            <intent-filter>
+                <action android:name="android.intent.action.SEND" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <data android:mimeType="image/*" />
+            </intent-filter>
         </activity>
     </application>
 
+    <uses-feature
+        android:name="android.hardware.camera"
+        android:required="true" />
 </manifest>
