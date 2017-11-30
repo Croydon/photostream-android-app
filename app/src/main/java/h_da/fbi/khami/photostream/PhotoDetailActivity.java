@@ -25,6 +25,8 @@ public class PhotoDetailActivity extends PhotoStreamActivity implements OnPhotoD
     private ImageView photoImageView;
     private TextView photoDescriptionTextView;
 
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -34,10 +36,7 @@ public class PhotoDetailActivity extends PhotoStreamActivity implements OnPhotoD
         photoImageView = findViewById(R.id.photo_in_detail_imageView);
         photoDescriptionTextView = findViewById(R.id.photo_description_in_detail_textView);
 
-        if(!(photo.isDeleteable())) {
-            //MenuItem deleteIcon = (MenuItem) findViewById(R.id.delete_photo_item);
-            ((MenuItem) findViewById(R.id.delete_photo_item)).setVisible(false);
-        }
+
     }
 
     @Override
@@ -59,6 +58,11 @@ public class PhotoDetailActivity extends PhotoStreamActivity implements OnPhotoD
             } catch (Exception e) {
                 // FIXME: Give user feedback that the picture could not be loaded
             }
+        }
+
+        if(!(photo.isDeleteable())) {
+            //MenuItem deleteIcon = (MenuItem) findViewById(R.id.delete_photo_item);
+            ((MenuItem) findViewById(R.id.delete_photo_item)).setVisible(false);
         }
     }
 
@@ -83,7 +87,10 @@ public class PhotoDetailActivity extends PhotoStreamActivity implements OnPhotoD
                 return true;
 
             case R.id.delete_photo_item:
-                deletePhoto();
+
+            deletePhoto();
+
+
                 return true;
         }
 
@@ -95,7 +102,7 @@ public class PhotoDetailActivity extends PhotoStreamActivity implements OnPhotoD
         photoStreamClient.deletePhoto(photo.getId());
     }
 
-
+    // OnPhotoDeletedListener
     @Override
     public void onPhotoDeleted(int photoId) {
 
