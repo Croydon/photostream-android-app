@@ -9,12 +9,14 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
+import android.widget.ImageView;
 
 import java.util.List;
 
 import hochschuledarmstadt.photostream_tools.IPhotoStreamClient;
 import hochschuledarmstadt.photostream_tools.PhotoStreamActivity;
 import hochschuledarmstadt.photostream_tools.RequestType;
+import hochschuledarmstadt.photostream_tools.adapter.BasePhotoAdapter;
 import hochschuledarmstadt.photostream_tools.callback.OnPhotosReceivedListener;
 import hochschuledarmstadt.photostream_tools.callback.OnRequestListener;
 import hochschuledarmstadt.photostream_tools.model.HttpError;
@@ -57,22 +59,35 @@ public class MainActivity extends PhotoStreamActivity implements OnPhotosReceive
                         photoStreamClient.loadMorePhotos();
                     }
                 }
-
-
             }
 
         });
 
+
+        // OnItemClickListener für die ImageView mit der id "imageView" setzen.
+        adapter.setOnItemClickListener(R.id.photo_in_stream_imageView, (BasePhotoAdapter.OnItemClickListener<PhotoViewHolder>) (viewHolder, v, photo) -> {
+            // Wenn auf die ImageView ein Klick ausgelöst wurde, dann die FullscreenActivity starten,
+            // um das Photo im Vollbild anzuzeigen
+            Intent intent = new Intent(MainActivity.this, PhotoDetailActivity.class);
+            intent.putExtra("photoObject", photo);
+            startActivity(intent);
+        });
+
+        adapter.setOnItemClickListener(R.id.favorite_imageView, (BasePhotoAdapter.OnItemClickListener<PhotoViewHolder>) (viewHolder, v, photo) -> {
+            // Wenn auf die ImageView ein Klick ausgelöst wurde, dann die FullscreenActivity starten,
+            // um das Photo im Vollbild anzuzeigen
+            Intent intent = new Intent(MainActivity.this, PhotoDetailActivity.class);
+            intent.putExtra("photoObject", photo);
+            startActivity(intent);
+        });
+
         recyclerView.setAdapter(adapter);
 
-        fab = (FloatingActionButton) findViewById(R.id.add_photo_fab);
+        fab = findViewById(R.id.add_photo_fab);
 
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view)
-            {
-                startActivity(new Intent(MainActivity.this, UploadPhoto.class));
-            }
+        fab.setOnClickListener((View view) ->
+        {
+            startActivity(new Intent(MainActivity.this, UploadPhoto.class));
         });
     }
 

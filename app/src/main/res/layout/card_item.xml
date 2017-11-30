@@ -22,7 +22,7 @@
             >
 
             <TextView
-                android:id="@+id/username_textView"
+                android:id="@+id/description_textView"
                 android:layout_width="match_parent"
                 android:layout_height="40dp"
                 android:layout_alignParentBottom="true"
@@ -34,7 +34,7 @@
                 />
 
             <ImageView
-                android:id="@+id/star_unchecked_imageView"
+                android:id="@+id/favorite_imageView"
                 android:layout_width="40dp"
                 android:layout_height="40dp"
                 android:src="@drawable/ic_star_border_black_24dp"
