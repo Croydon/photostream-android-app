@@ -103,6 +103,7 @@ public class PhotoDetailActivity extends PhotoStreamActivity implements OnPhotoD
                         .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int which) {
                                 deletePhoto();
+                                finish();  // delete activity from stack
                                 startActivity(new Intent(PhotoDetailActivity.this, MainActivity.class));
                             }
                         })
@@ -128,7 +129,6 @@ public class PhotoDetailActivity extends PhotoStreamActivity implements OnPhotoD
     // OnPhotoDeletedListener
     @Override
     public void onPhotoDeleted(int photoId) {
-
     }
 
     @Override
