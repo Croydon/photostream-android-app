@@ -1,0 +1,11 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="h_da.fbi.khami.photostream.PhotoDetailActivity">
+    <item
+        android:id="@+id/delete_photo_item"
+        android:icon="@android:drawable/ic_menu_delete"
+        android:title="Details"
+        app:showAsAction="ifRoom"
+        app:srcCompat="@android:drawable/ic_menu_delete" />
+</menu>

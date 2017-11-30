@@ -44,7 +44,16 @@
                 <data android:mimeType="image/*" />
             </intent-filter>
         </activity>
-        <activity android:name=".PhotoDetailActivity"></activity>
+        <activity
+            android:name=".PhotoDetailActivity"
+            android:label="Details"
+            android:parentActivityName=".MainActivity">
+
+            <!-- Parent activity meta-data to support 4.0 and lower -->
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="h_da.fbi.khami.photostream.MainActivity" />
+        </activity>
     </application>
 
 </manifest>

@@ -1,9 +1,12 @@
 package h_da.fbi.khami.photostream;
 
+import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+
 
 public class PhotoViewHolder extends RecyclerView.ViewHolder {
 
@@ -16,7 +19,7 @@ public class PhotoViewHolder extends RecyclerView.ViewHolder {
         super(itemView);
 
         streamPhoto = (ImageView) itemView.findViewById(R.id.photo_in_stream_imageView);
-        user = (TextView) itemView.findViewById(R.id.username_textView);
-        star = (ImageView) itemView.findViewById(R.id.star_unchecked_imageView);
+        user = (TextView) itemView.findViewById(R.id.description_textView);
+        star = (ImageView) itemView.findViewById(R.id.favorite_imageView);
     }
 }
