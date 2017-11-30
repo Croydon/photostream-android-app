@@ -1,20 +1,20 @@
 package h_da.fbi.khami.photostream;
 
-import android.content.Context;
-import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import hochschuledarmstadt.photostream_tools.adapter.BasePhotoAdapter;
+import hochschuledarmstadt.photostream_tools.callback.OnPhotoDeletedListener;
+import hochschuledarmstadt.photostream_tools.model.HttpError;
 import hochschuledarmstadt.photostream_tools.model.Photo;
 
 /**
  *
  */
 
-public class PhotoAdapter extends BasePhotoAdapter<PhotoViewHolder> {
+public class PhotoAdapter extends BasePhotoAdapter<PhotoViewHolder> implements OnPhotoDeletedListener {
     @Override
     public PhotoViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         LayoutInflater layoutInflater = LayoutInflater.from(parent.getContext());
@@ -40,4 +40,14 @@ public class PhotoAdapter extends BasePhotoAdapter<PhotoViewHolder> {
 
     }
 
+    @Override
+    public void onPhotoDeleted(int photoId) {
+      remove(photoId);
+
+    }
+
+    @Override
+    public void onPhotoDeleteFailed(int photoId, HttpError httpError) {
+
+    }
 }
