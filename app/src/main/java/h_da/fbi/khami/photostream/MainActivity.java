@@ -62,19 +62,13 @@ public class MainActivity extends PhotoStreamActivity implements OnPhotosReceive
 
         });
 
-
-        // OnItemClickListener für die ImageView mit der id "imageView" setzen.
         adapter.setOnItemClickListener(R.id.photo_in_stream_imageView, (BasePhotoAdapter.OnItemClickListener<PhotoViewHolder>) (viewHolder, v, photo) -> {
-            // Wenn auf die ImageView ein Klick ausgelöst wurde, dann die FullscreenActivity starten,
-            // um das Photo im Vollbild anzuzeigen
             Intent intent = new Intent(MainActivity.this, PhotoDetailActivity.class);
             intent.putExtra("photoObject", photo);
             startActivity(intent);
         });
 
         adapter.setOnItemClickListener(R.id.favorite_imageView, (BasePhotoAdapter.OnItemClickListener<PhotoViewHolder>) (viewHolder, v, photo) -> {
-            // Wenn auf die ImageView ein Klick ausgelöst wurde, dann die FullscreenActivity starten,
-            // um das Photo im Vollbild anzuzeigen
             Intent intent = new Intent(MainActivity.this, PhotoDetailActivity.class);
             intent.putExtra("photoObject", photo);
             startActivity(intent);
