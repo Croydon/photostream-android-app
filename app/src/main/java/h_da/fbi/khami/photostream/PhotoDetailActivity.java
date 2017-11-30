@@ -11,6 +11,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import java.io.File;
 
@@ -22,6 +23,7 @@ public class PhotoDetailActivity extends PhotoStreamActivity {
 
     private Photo photo;
     private ImageView photoImageView;
+    private TextView photoDescriptionTextView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,14 +32,15 @@ public class PhotoDetailActivity extends PhotoStreamActivity {
 
 
         photoImageView = findViewById(R.id.photo_in_detail_imageView);
+        photoDescriptionTextView = findViewById(R.id.photo_description_in_detail_textView);
     }
 
     @Override
     protected void onStart() {
         super.onStart();
 
-        // Das Photo aus dem Intent referenzieren
         photo = getIntent().getParcelableExtra("photoObject");
+        photoDescriptionTextView.setText(photo.getDescription());
 
         // Pfad zum Photo
         final File imageFile = photo.getImageFile();
