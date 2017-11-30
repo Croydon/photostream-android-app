@@ -1,12 +1,10 @@
 package h_da.fbi.khami.photostream;
 
-import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
+import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.v4.app.NavUtils;
-import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -17,9 +15,11 @@ import java.io.File;
 
 import hochschuledarmstadt.photostream_tools.IPhotoStreamClient;
 import hochschuledarmstadt.photostream_tools.PhotoStreamActivity;
+import hochschuledarmstadt.photostream_tools.callback.OnPhotoDeletedListener;
+import hochschuledarmstadt.photostream_tools.model.HttpError;
 import hochschuledarmstadt.photostream_tools.model.Photo;
 
-public class PhotoDetailActivity extends PhotoStreamActivity {
+public class PhotoDetailActivity extends PhotoStreamActivity implements OnPhotoDeletedListener {
 
     private Photo photo;
     private ImageView photoImageView;
@@ -33,6 +33,11 @@ public class PhotoDetailActivity extends PhotoStreamActivity {
 
         photoImageView = findViewById(R.id.photo_in_detail_imageView);
         photoDescriptionTextView = findViewById(R.id.photo_description_in_detail_textView);
+
+        if(!(photo.isDeleteable())) {
+            //MenuItem deleteIcon = (MenuItem) findViewById(R.id.delete_photo_item);
+            ((MenuItem) findViewById(R.id.delete_photo_item)).setVisible(false);
+        }
     }
 
     @Override
@@ -78,11 +83,27 @@ public class PhotoDetailActivity extends PhotoStreamActivity {
                 return true;
 
             case R.id.delete_photo_item:
-                // FIXME: Delete photo.
+                deletePhoto();
                 return true;
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    private void deletePhoto() {
+        IPhotoStreamClient photoStreamClient = getPhotoStreamClient();
+        photoStreamClient.deletePhoto(photo.getId());
+    }
+
+
+    @Override
+    public void onPhotoDeleted(int photoId) {
+
+    }
+
+    @Override
+    public void onPhotoDeleteFailed(int photoId, HttpError httpError) {
+
     }
 
     @Override
