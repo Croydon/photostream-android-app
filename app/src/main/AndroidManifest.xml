@@ -15,7 +15,7 @@
         android:theme="@style/AppTheme">
         <meta-data
             android:name="PHOTOSTREAM_URL"
-            android:value="http://141.100.70.65:8082" />
+            android:value="http://192.168.178.24:8082" />
 
         <activity
             android:name=".MainActivity"
