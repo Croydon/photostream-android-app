@@ -64,10 +64,7 @@ public class PhotoDetailActivity extends PhotoStreamActivity implements OnPhotoD
             }
         }
 
-        if(!(photo.isDeleteable())) {
-            //MenuItem deleteIcon = (MenuItem) findViewById(R.id.delete_photo_item);
-            ((MenuItem) findViewById(R.id.delete_photo_item)).setVisible(false);
-        }
+
     }
 
     public void setPhoto(Bitmap newPhoto)
@@ -80,6 +77,12 @@ public class PhotoDetailActivity extends PhotoStreamActivity implements OnPhotoD
         // Inflate the menu; this adds items to the action bar if it is present
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.menu_photo_detail, menu);
+
+        if(!(photo.isDeleteable())) {
+
+            menu.findItem(R.id.delete_photo_item).setVisible(false);
+
+        }
         return true;
     }
 
