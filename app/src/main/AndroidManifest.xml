@@ -17,6 +17,14 @@
             android:name="PHOTOSTREAM_URL"
             android:value="http://141.100.70.65:8082" />
 
+
+        <receiver android:name="h_da.fbi.khami.photostream.NotificationBroadcastReceiver">
+            <intent-filter>
+                <action android:name="hochschuledarmstadt.photostream_tools.intent.NEW_PHOTO"/>
+            </intent-filter>
+        </receiver>
+
+
         <activity
             android:name=".MainActivity"
             android:label="@string/app_name">
