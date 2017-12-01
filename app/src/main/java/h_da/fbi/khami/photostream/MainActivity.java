@@ -68,12 +68,6 @@ public class MainActivity extends PhotoStreamActivity implements OnPhotosReceive
             startActivity(intent);
         });
 
-        adapter.setOnItemClickListener(R.id.favorite_imageView, (BasePhotoAdapter.OnItemClickListener<PhotoViewHolder>) (viewHolder, v, photo) -> {
-            Intent intent = new Intent(MainActivity.this, PhotoDetailActivity.class);
-            intent.putExtra("photoObject", photo);
-            startActivity(intent);
-        });
-
         recyclerView.setAdapter(adapter);
 
         fab = findViewById(R.id.add_photo_fab);
