@@ -21,13 +21,14 @@ public class NotificationBroadcastReceiver extends BroadcastReceiver {
             // Das empfangene Photo ist im Intent enthalten
 
             Photo receivedPhoto = intent.getParcelableExtra(IPhotoStreamClient.INTENT_KEY_PHOTO);
-            Toast.makeText(context, "Intent empfangen im BroadcastReceiver!", Toast.LENGTH_LONG).show();
 
             NotificationCompat.Builder mBuilder =
                     new NotificationCompat.Builder(context,"channel")
                             .setSmallIcon(R.mipmap.ic_launcher)
                             .setContentTitle("New Photo Received!")
-                            .setContentText("Explore Now!");
+                            .setContentText("Explore Now!")
+                            .setAutoCancel(true);
+
 
 
             // Creates an explicit intent for an Activity in your app
