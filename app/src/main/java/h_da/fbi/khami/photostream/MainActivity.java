@@ -9,6 +9,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
+import android.widget.ImageView;
 
 import java.util.List;
 
@@ -16,13 +17,14 @@ import hochschuledarmstadt.photostream_tools.IPhotoStreamClient;
 import hochschuledarmstadt.photostream_tools.PhotoStreamActivity;
 import hochschuledarmstadt.photostream_tools.RequestType;
 import hochschuledarmstadt.photostream_tools.adapter.BasePhotoAdapter;
+import hochschuledarmstadt.photostream_tools.callback.OnPhotoFavoredListener;
 import hochschuledarmstadt.photostream_tools.callback.OnPhotosReceivedListener;
 import hochschuledarmstadt.photostream_tools.callback.OnRequestListener;
 import hochschuledarmstadt.photostream_tools.model.HttpError;
 import hochschuledarmstadt.photostream_tools.model.Photo;
 import hochschuledarmstadt.photostream_tools.model.PhotoQueryResult;
 
-public class MainActivity extends PhotoStreamActivity implements OnPhotosReceivedListener, OnRequestListener {
+public class MainActivity extends PhotoStreamActivity implements OnPhotosReceivedListener, OnRequestListener, OnPhotoFavoredListener {
 
     RecyclerView recyclerView;
     PhotoAdapter adapter;
@@ -66,6 +68,20 @@ public class MainActivity extends PhotoStreamActivity implements OnPhotosReceive
             Intent intent = new Intent(MainActivity.this, PhotoDetailActivity.class);
             intent.putExtra("photoObject", photo);
             startActivity(intent);
+        });
+
+        adapter.setOnItemClickListener(R.id.favorite_imageView, (BasePhotoAdapter.OnItemClickListener<PhotoViewHolder>) (viewHolder, v, photo) -> {
+            IPhotoStreamClient photoStreamClient = getPhotoStreamClient();
+
+            if(photo.isFavorite()) {
+                photoStreamClient.unfavoritePhoto(photo.getId());
+                photo.setFavorite(false);
+                viewHolder.star.setImageResource(R.drawable.ic_star_border_black_24dp);
+            } else {
+                photoStreamClient.favoritePhoto(photo.getId());
+                photo.setFavorite(true);
+                viewHolder.star.setImageResource(R.drawable.ic_star_border_yellow_24dp);
+            }
         });
 
         recyclerView.setAdapter(adapter);
@@ -133,5 +149,20 @@ public class MainActivity extends PhotoStreamActivity implements OnPhotosReceive
     // OnRequestListener
     public void onRequestFinished() {
         findViewById(R.id.photo_loading_progressBar).setVisibility(View.GONE);
+    }
+
+    @Override
+    public void onPhotoFavored(int photoId) {
+        // Dummy, keep-me
+    }
+
+    @Override
+    public void onPhotoUnfavored(int photoId) {
+        // Dummy, keep-me
+    }
+
+    @Override
+    public void onFavoringPhotoFailed(int photoId, HttpError httpError) {
+        // FIXME: Display error to user
     }
 }

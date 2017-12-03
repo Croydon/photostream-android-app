@@ -31,7 +31,11 @@ public class PhotoAdapter extends BasePhotoAdapter<PhotoViewHolder> implements O
         final Photo photo = getItemAtPosition(position);
         // Bitmap anhand des Photo Objekts laden und in der ImageView setzen
         loadBitmapIntoImageViewAsync(holder, holder.streamPhoto, photo);
-        holder.user.setText(photo.getDescription());
+        holder.description.setText(photo.getDescription());
+
+        if(photo.isFavorite()) {
+            holder.star.setImageResource(R.drawable.ic_star_border_yellow_24dp);
+        }
     }
 
     @Override

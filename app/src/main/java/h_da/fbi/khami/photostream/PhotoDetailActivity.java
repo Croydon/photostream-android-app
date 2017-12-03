@@ -12,6 +12,7 @@ import android.support.v7.app.AlertDialog;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -28,7 +29,7 @@ public class PhotoDetailActivity extends PhotoStreamActivity implements OnPhotoD
     private Photo photo;
     private ImageView photoImageView;
     private TextView photoDescriptionTextView;
-
+    private ImageView photoFavstarImageView;
 
 
     @Override
@@ -39,8 +40,7 @@ public class PhotoDetailActivity extends PhotoStreamActivity implements OnPhotoD
 
         photoImageView = findViewById(R.id.photo_in_detail_imageView);
         photoDescriptionTextView = findViewById(R.id.photo_description_in_detail_textView);
-
-
+        photoFavstarImageView = findViewById(R.id.photo_in_detail_favstar_imageView);
     }
 
     @Override
@@ -64,7 +64,22 @@ public class PhotoDetailActivity extends PhotoStreamActivity implements OnPhotoD
             }
         }
 
+        updateFavstar();
 
+        photoFavstarImageView.setOnClickListener((View view) ->
+        {
+            IPhotoStreamClient photoStreamClient = getPhotoStreamClient();
+
+            if (photo.isFavorite()) {
+                photoStreamClient.unfavoritePhoto(photo.getId());
+                photo.setFavorite(false);
+                updateFavstar();
+            } else {
+                photoStreamClient.favoritePhoto(photo.getId());
+                photo.setFavorite(true);
+                updateFavstar();
+            }
+        });
     }
 
     public void setPhoto(Bitmap newPhoto)
@@ -147,5 +162,14 @@ public class PhotoDetailActivity extends PhotoStreamActivity implements OnPhotoD
     @Override
     protected void onPhotoStreamServiceDisconnected(IPhotoStreamClient photoStreamClient) {
 
+    }
+
+    public void updateFavstar()
+    {
+        if (photo.isFavorite()) {
+            photoFavstarImageView.setImageResource(R.drawable.ic_star_border_yellow_24dp);
+        } else {
+            photoFavstarImageView.setImageResource(R.drawable.ic_star_border_black_24dp);
+        }
     }
 }

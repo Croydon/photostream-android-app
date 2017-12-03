@@ -11,7 +11,7 @@ import android.widget.TextView;
 public class PhotoViewHolder extends RecyclerView.ViewHolder {
 
     public final ImageView streamPhoto;
-    public final TextView user;
+    public final TextView description;
     public final ImageView star;
 
 
@@ -19,7 +19,7 @@ public class PhotoViewHolder extends RecyclerView.ViewHolder {
         super(itemView);
 
         streamPhoto = (ImageView) itemView.findViewById(R.id.photo_in_stream_imageView);
-        user = (TextView) itemView.findViewById(R.id.description_textView);
+        description = (TextView) itemView.findViewById(R.id.description_textView);
         star = (ImageView) itemView.findViewById(R.id.favorite_imageView);
     }
 }
