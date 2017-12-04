@@ -34,7 +34,7 @@ public class PhotoAdapter extends BasePhotoAdapter<PhotoViewHolder> implements O
         holder.description.setText(photo.getDescription());
 
         if(photo.isFavorite()) {
-            holder.star.setImageResource(R.drawable.ic_star_border_yellow_24dp);
+            holder.star.setImageResource(R.drawable.ic_star_yellow_24dp);
         }
     }
 

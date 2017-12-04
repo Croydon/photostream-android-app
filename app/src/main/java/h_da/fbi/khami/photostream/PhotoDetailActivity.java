@@ -167,9 +167,9 @@ public class PhotoDetailActivity extends PhotoStreamActivity implements OnPhotoD
     public void updateFavstar()
     {
         if (photo.isFavorite()) {
-            photoFavstarImageView.setImageResource(R.drawable.ic_star_border_yellow_24dp);
+            photoFavstarImageView.setImageResource(R.drawable.ic_star_yellow_24dp);
         } else {
-            photoFavstarImageView.setImageResource(R.drawable.ic_star_border_black_24dp);
+            photoFavstarImageView.setImageResource(R.drawable.ic_star_border_white_24dp);
         }
     }
 }
