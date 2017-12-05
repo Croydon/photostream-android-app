@@ -80,7 +80,7 @@ public class MainActivity extends PhotoStreamActivity implements OnPhotosReceive
             } else {
                 photoStreamClient.favoritePhoto(photo.getId());
                 photo.setFavorite(true);
-                viewHolder.star.setImageResource(R.drawable.ic_star_yellow_24dp);
+                viewHolder.star.setImageResource(R.drawable.ic_star_white_24dp);
             }
         });
 
