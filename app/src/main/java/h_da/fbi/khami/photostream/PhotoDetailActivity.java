@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.v4.app.NavUtils;
 import android.support.v7.app.AlertDialog;
+import android.support.v7.widget.RecyclerView;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -20,16 +21,21 @@ import java.io.File;
 
 import hochschuledarmstadt.photostream_tools.IPhotoStreamClient;
 import hochschuledarmstadt.photostream_tools.PhotoStreamActivity;
+import hochschuledarmstadt.photostream_tools.adapter.BaseCommentAdapter;
 import hochschuledarmstadt.photostream_tools.callback.OnPhotoDeletedListener;
+import hochschuledarmstadt.photostream_tools.callback.OnCommentsReceivedListener;
+import hochschuledarmstadt.photostream_tools.model.Comment;
 import hochschuledarmstadt.photostream_tools.model.HttpError;
 import hochschuledarmstadt.photostream_tools.model.Photo;
 
-public class PhotoDetailActivity extends PhotoStreamActivity implements OnPhotoDeletedListener {
+public class PhotoDetailActivity extends PhotoStreamActivity implements OnPhotoDeletedListener, OnCommentsReceivedListener {
 
     private Photo photo;
     private ImageView photoImageView;
     private TextView photoDescriptionTextView;
     private ImageView photoFavstarImageView;
+    private RecyclerView recyclerView;
+    private CommentAdapter commentAdapter;
 
 
     @Override
@@ -41,6 +47,23 @@ public class PhotoDetailActivity extends PhotoStreamActivity implements OnPhotoD
         photoImageView = findViewById(R.id.photo_in_detail_imageView);
         photoDescriptionTextView = findViewById(R.id.photo_description_in_detail_textView);
         photoFavstarImageView = findViewById(R.id.photo_in_detail_favstar_imageView);
+
+        recyclerView = (RecyclerView) findViewById(R.id.recyclerView);
+        commentAdapter = new CommentAdapter();
+
+
+        commentAdapter.setOnItemClickListener(R.id.delete_imageView, new BaseCommentAdapter.OnItemClickListener<CommentAdapter.CommentViewHolder>() {
+            @Override
+            public void onItemClicked(CommentAdapter.CommentViewHolder viewHolder, View v, Comment comment) {
+                if(comment.isDeleteable())
+                {
+                    // FIXME: Do something.
+                }
+            }
+        });
+
+        // Der RecyclerView abschließend den Adapter als Datenquelle zuweisen
+        recyclerView.setAdapter(commentAdapter);
     }
 
     @Override
@@ -162,6 +185,28 @@ public class PhotoDetailActivity extends PhotoStreamActivity implements OnPhotoD
     @Override
     protected void onPhotoStreamServiceDisconnected(IPhotoStreamClient photoStreamClient) {
 
+    }
+
+           /*  if(photo.isDeletable()) {
+            holder.delete.setImageResource(R.drawable.ic_star_white_24dp);
+        } */
+
+
+    @Override
+    public void onCommentsReceived(int photoId, java.util.List<Comment> comments) {
+        // FIXME: implement.
+        // Wenn die Kommentare zur aktuellen PHOTO_ID gehören
+        if (photo.getId() == photoId)
+        {
+            adapter.set(comments);
+        }
+        // holder.delete.setVisibli(
+
+    }
+
+    @Override
+    public void onReceiveCommentsFailed(int photoId, HttpError httpError) {
+        // FIXME: Maybe display an error.
     }
 
     public void updateFavstar()
