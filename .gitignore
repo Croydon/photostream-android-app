@@ -14,3 +14,7 @@ app/src/main/res/drawable/funny_pic.PNG
 .idea/vcs.xml
 
 .idea/misc.xml
+.project
+.settings/org.eclipse.buildship.core.prefs
+app/.classpath
+app/.settings/org.eclipse.buildship.core.prefs
