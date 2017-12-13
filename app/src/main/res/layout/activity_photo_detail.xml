@@ -52,14 +52,10 @@
                     android:src="@drawable/ic_star_border_white_24dp"
                     android:background="@color/cardview_dark_background" />
 
-
-
-
-
             </LinearLayout>
 
             <android.support.v7.widget.RecyclerView
-                android:id="@+id/stream_recyclerView"
+                android:id="@+id/comment_recyclerView"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:orientation="vertical"

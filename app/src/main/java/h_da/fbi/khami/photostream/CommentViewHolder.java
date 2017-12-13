@@ -17,6 +17,6 @@ public class CommentViewHolder extends RecyclerView.ViewHolder {
         super(itemView);
 
         textComment = itemView.findViewById(R.id.comment_textView);
-        delete = itemView.findViewById(R.id.delete_imageView);
+        delete = itemView.findViewById(R.id.comment_delete_imageView);
     }
 }
