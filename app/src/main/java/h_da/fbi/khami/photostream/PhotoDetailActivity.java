@@ -9,7 +9,9 @@ import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.v4.app.NavUtils;
 import android.support.v7.app.AlertDialog;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -36,6 +38,7 @@ public class PhotoDetailActivity extends PhotoStreamActivity implements OnPhotoD
     private ImageView photoFavstarImageView;
     private RecyclerView recyclerView;
     private CommentAdapter commentAdapter;
+    private LinearLayoutManager linearLayoutManager;
 
 
     @Override
@@ -48,11 +51,14 @@ public class PhotoDetailActivity extends PhotoStreamActivity implements OnPhotoD
         photoDescriptionTextView = findViewById(R.id.photo_description_in_detail_textView);
         photoFavstarImageView = findViewById(R.id.photo_in_detail_favstar_imageView);
 
-        recyclerView = (RecyclerView) findViewById(R.id.recyclerView);
+        recyclerView = (RecyclerView) findViewById(R.id.comment_recyclerView);
+        linearLayoutManager = new LinearLayoutManager(this,LinearLayoutManager.VERTICAL,false);
+        recyclerView.setLayoutManager(linearLayoutManager);
+
         commentAdapter = new CommentAdapter();
 
 
-        commentAdapter.setOnItemClickListener(R.id.delete_imageView, new BaseCommentAdapter.OnItemClickListener<CommentAdapter.CommentViewHolder>() {
+        commentAdapter.setOnItemClickListener(R.id.comment_delete_imageView, new BaseCommentAdapter.OnItemClickListener<CommentAdapter.CommentViewHolder>() {
             @Override
             public void onItemClicked(CommentAdapter.CommentViewHolder viewHolder, View v, Comment comment) {
                 if(comment.isDeleteable())
@@ -179,7 +185,8 @@ public class PhotoDetailActivity extends PhotoStreamActivity implements OnPhotoD
 
     @Override
     protected void onPhotoStreamServiceConnected(IPhotoStreamClient photoStreamClient, Bundle savedInstanceState) {
-
+        photoStreamClient.addOnCommentsReceivedListener(this);
+        photoStreamClient.loadComments(photo.getId());
     }
 
     @Override
@@ -187,22 +194,34 @@ public class PhotoDetailActivity extends PhotoStreamActivity implements OnPhotoD
 
     }
 
-           /*  if(photo.isDeletable()) {
-            holder.delete.setImageResource(R.drawable.ic_star_white_24dp);
-        } */
-
 
     @Override
     public void onCommentsReceived(int photoId, java.util.List<Comment> comments) {
-        // FIXME: implement.
-        // Wenn die Kommentare zur aktuellen PHOTO_ID gehören
         if (photo.getId() == photoId)
         {
-            adapter.set(comments);
+            commentAdapter.set(comments);
         }
         // holder.delete.setVisibli(
 
+                   /*  if(photo.isDeletable()) {
+            holder.delete.setImageResource(R.drawable.ic_star_white_24dp);
+        } */
     }
+
+   /* @Override
+    public void onNewCommentReceived(Comment comment) {
+        if (comment.getPhotoId() == photo.getId()) {
+            commentAdapter.add(comment);
+
+            // Wenn der Kommentar von diesem Gerät stammt
+            if (comment.isDeleteable()) {
+                // dann die Eingabe leeren
+                editText.setText("");
+                // und ans Ende der Liste springen
+                recyclerView.scrollToPosition(adapter.getItemCount() - 1);
+            }
+        }
+    } */
 
     @Override
     public void onReceiveCommentsFailed(int photoId, HttpError httpError) {

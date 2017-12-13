@@ -1,13 +1,10 @@
 package h_da.fbi.khami.photostream;
 
 import android.support.v7.widget.RecyclerView;
-
-import hochschuledarmstadt.photostream_tools.adapter.BaseCommentAdapter;package de.hda.photostreamexamples.examples.comment;
-
-import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import hochschuledarmstadt.photostream_tools.adapter.BaseCommentAdapter;
@@ -19,9 +16,12 @@ public class CommentAdapter extends BaseCommentAdapter<CommentAdapter.CommentVie
 
     public static class CommentViewHolder extends RecyclerView.ViewHolder {
         public TextView textView;
+        public ImageView deleteImageView;
+
         public CommentViewHolder(View itemView) {
             super(itemView);
             textView = (TextView) itemView.findViewById(R.id.comment_textView);
+            deleteImageView = itemView.findViewById(R.id.comment_delete_imageView);
         }
     }
 
@@ -42,6 +42,15 @@ public class CommentAdapter extends BaseCommentAdapter<CommentAdapter.CommentVie
         super.onBindViewHolder(holder, position);
         Comment comment = getItemAtPosition(position);
         holder.textView.setText(comment.getMessage());
+
+        if(comment.isDeleteable())
+        {
+            holder.deleteImageView.setVisibility(View.VISIBLE);
+        }
+        else
+        {
+            holder.deleteImageView.setVisibility(View.INVISIBLE);
+        }
     }
 
 }
