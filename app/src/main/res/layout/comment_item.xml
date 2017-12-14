@@ -2,13 +2,14 @@
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="56dp"
     android:orientation="horizontal">
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/comment_textView"
         android:text="That's a Bingo"
+        android:textColor="#000000"
         android:layout_weight="5"
         android:paddingLeft="8dp"
         android:paddingRight="4dp"
