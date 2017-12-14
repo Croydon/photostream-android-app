@@ -3,7 +3,7 @@
       xmlns:tools="http://schemas.android.com/tools"
       tools:context="h_da.fbi.khami.photostream.PhotoUpload">
     <item
-        android:id="@+id/upload_photo_item"
+        android:id="@+id/post_comment_item"
         android:icon="@android:drawable/ic_menu_send"
         android:title="Post Comment"
         app:showAsAction="ifRoom"

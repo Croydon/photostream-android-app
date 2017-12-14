@@ -7,11 +7,11 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.NavUtils;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -24,8 +24,8 @@ import java.io.File;
 import hochschuledarmstadt.photostream_tools.IPhotoStreamClient;
 import hochschuledarmstadt.photostream_tools.PhotoStreamActivity;
 import hochschuledarmstadt.photostream_tools.adapter.BaseCommentAdapter;
-import hochschuledarmstadt.photostream_tools.callback.OnPhotoDeletedListener;
 import hochschuledarmstadt.photostream_tools.callback.OnCommentsReceivedListener;
+import hochschuledarmstadt.photostream_tools.callback.OnPhotoDeletedListener;
 import hochschuledarmstadt.photostream_tools.model.Comment;
 import hochschuledarmstadt.photostream_tools.model.HttpError;
 import hochschuledarmstadt.photostream_tools.model.Photo;
@@ -39,6 +39,7 @@ public class PhotoDetailActivity extends PhotoStreamActivity implements OnPhotoD
     private RecyclerView recyclerView;
     private CommentAdapter commentAdapter;
     private LinearLayoutManager linearLayoutManager;
+    private FloatingActionButton fab;
 
 
     @Override
@@ -50,6 +51,12 @@ public class PhotoDetailActivity extends PhotoStreamActivity implements OnPhotoD
         photoImageView = findViewById(R.id.photo_in_detail_imageView);
         photoDescriptionTextView = findViewById(R.id.photo_description_in_detail_textView);
         photoFavstarImageView = findViewById(R.id.photo_in_detail_favstar_imageView);
+
+        fab = findViewById(R.id.add_comment_fab);
+        fab.setOnClickListener((View view) ->
+        {
+            startActivity(new Intent(this, AddCommentActivity.class));
+        });
 
         recyclerView = (RecyclerView) findViewById(R.id.comment_recyclerView);
         linearLayoutManager = new LinearLayoutManager(this,LinearLayoutManager.VERTICAL,false);
