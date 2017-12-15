@@ -55,7 +55,9 @@ public class PhotoDetailActivity extends PhotoStreamActivity implements OnPhotoD
         fab = findViewById(R.id.add_comment_fab);
         fab.setOnClickListener((View view) ->
         {
-            startActivity(new Intent(this, AddCommentActivity.class));
+            Intent intent = new Intent(this, AddCommentActivity.class);
+            intent.putExtra("PhotoID",photo.getId());
+            startActivity(intent);
         });
 
         recyclerView = (RecyclerView) findViewById(R.id.comment_recyclerView);

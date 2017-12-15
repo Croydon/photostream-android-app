@@ -1,10 +1,10 @@
 package h_da.fbi.khami.photostream;
 
 import android.os.Bundle;
-import android.support.v4.app.NavUtils;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.widget.EditText;
 
 import hochschuledarmstadt.photostream_tools.IPhotoStreamClient;
 import hochschuledarmstadt.photostream_tools.PhotoStreamActivity;
@@ -12,6 +12,8 @@ import hochschuledarmstadt.photostream_tools.PhotoStreamActivity;
 public class AddCommentActivity extends PhotoStreamActivity
 {
     IPhotoStreamClient photoStreamClient;
+    int photoID;
+    EditText userInput;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -19,7 +21,10 @@ public class AddCommentActivity extends PhotoStreamActivity
         setContentView(R.layout.activity_add_comment);
 
         photoStreamClient = getPhotoStreamClient();
+        userInput = findViewById(R.id.comment_editText);
 
+
+        photoID = getIntent().getExtras().getInt("PhotoID");
 
     }
 
@@ -44,11 +49,11 @@ public class AddCommentActivity extends PhotoStreamActivity
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case android.R.id.home:
-                NavUtils.navigateUpFromSameTask(this);
+                finish();
                 return true;
 
             case R.id.post_comment_item:
-                //uploadComment(1,"sdf");
+                photoStreamClient.uploadComment(photoID,userInput.getText().toString());
                 return true;
         }
         return super.onOptionsItemSelected(item);
