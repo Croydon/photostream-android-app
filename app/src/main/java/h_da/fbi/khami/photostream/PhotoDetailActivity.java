@@ -25,12 +25,14 @@ import hochschuledarmstadt.photostream_tools.IPhotoStreamClient;
 import hochschuledarmstadt.photostream_tools.PhotoStreamActivity;
 import hochschuledarmstadt.photostream_tools.adapter.BaseCommentAdapter;
 import hochschuledarmstadt.photostream_tools.callback.OnCommentsReceivedListener;
+import hochschuledarmstadt.photostream_tools.callback.OnNewCommentReceivedListener;
 import hochschuledarmstadt.photostream_tools.callback.OnPhotoDeletedListener;
 import hochschuledarmstadt.photostream_tools.model.Comment;
 import hochschuledarmstadt.photostream_tools.model.HttpError;
 import hochschuledarmstadt.photostream_tools.model.Photo;
 
-public class PhotoDetailActivity extends PhotoStreamActivity implements OnPhotoDeletedListener, OnCommentsReceivedListener {
+public class PhotoDetailActivity extends PhotoStreamActivity implements OnPhotoDeletedListener, OnCommentsReceivedListener, OnNewCommentReceivedListener
+{
 
     private Photo photo;
     private ImageView photoImageView;
@@ -217,6 +219,8 @@ public class PhotoDetailActivity extends PhotoStreamActivity implements OnPhotoD
         } */
     }
 
+
+
    /* @Override
     public void onNewCommentReceived(Comment comment) {
         if (comment.getPhotoId() == photo.getId()) {
@@ -235,6 +239,12 @@ public class PhotoDetailActivity extends PhotoStreamActivity implements OnPhotoD
     @Override
     public void onReceiveCommentsFailed(int photoId, HttpError httpError) {
         // FIXME: Maybe display an error.
+    }
+
+    @Override
+    public void onNewCommentReceived(Comment comment) {
+        IPhotoStreamClient photoStreamClient = getPhotoStreamClient();
+        photoStreamClient.loadComments(photo.getId());
     }
 
     public void updateFavstar()
