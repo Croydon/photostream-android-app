@@ -65,6 +65,7 @@ public class PhotoDetailActivity extends PhotoStreamActivity implements OnPhotoD
         recyclerView = (RecyclerView) findViewById(R.id.comment_recyclerView);
         linearLayoutManager = new LinearLayoutManager(this,LinearLayoutManager.VERTICAL,false);
         recyclerView.setLayoutManager(linearLayoutManager);
+        recyclerView.setNestedScrollingEnabled(false);
 
         commentAdapter = new CommentAdapter();
 
