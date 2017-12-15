@@ -20,7 +20,7 @@ public class AddCommentActivity extends PhotoStreamActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_comment);
 
-        photoStreamClient = getPhotoStreamClient();
+
         userInput = findViewById(R.id.comment_editText);
 
 
@@ -53,7 +53,9 @@ public class AddCommentActivity extends PhotoStreamActivity
                 return true;
 
             case R.id.post_comment_item:
+                photoStreamClient = getPhotoStreamClient();
                 photoStreamClient.uploadComment(photoID,userInput.getText().toString());
+                finish();
                 return true;
         }
         return super.onOptionsItemSelected(item);
