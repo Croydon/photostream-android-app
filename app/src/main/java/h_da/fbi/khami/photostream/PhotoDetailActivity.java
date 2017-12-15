@@ -197,6 +197,7 @@ public class PhotoDetailActivity extends PhotoStreamActivity implements OnPhotoD
     @Override
     protected void onPhotoStreamServiceConnected(IPhotoStreamClient photoStreamClient, Bundle savedInstanceState) {
         photoStreamClient.addOnCommentsReceivedListener(this);
+        photoStreamClient.addOnNewCommentReceivedListener(this);
         photoStreamClient.loadComments(photo.getId());
     }
 
