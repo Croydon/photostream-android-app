@@ -64,6 +64,10 @@
             android:name=".AddCommentActivity"
             android:label="Post A Comment"
             android:parentActivityName=".PhotoDetailActivity">
+
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="h_da.fbi.khami.photostream.PhotoDetailActivity"/>
         </activity>
     </application>
 
