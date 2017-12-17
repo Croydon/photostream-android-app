@@ -245,8 +245,7 @@ public class PhotoDetailActivity extends PhotoStreamActivity implements OnPhotoD
 
     @Override
     public void onNewCommentReceived(Comment comment) {
-        IPhotoStreamClient photoStreamClient = getPhotoStreamClient();
-        photoStreamClient.loadComments(photo.getId());
+        commentAdapter.add(comment);
     }
 
     public void updateFavstar()
