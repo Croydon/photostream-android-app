@@ -75,7 +75,29 @@ public class PhotoDetailActivity extends PhotoStreamActivity implements OnPhotoD
             public void onItemClicked(CommentAdapter.CommentViewHolder viewHolder, View v, Comment comment) {
                 if(comment.isDeleteable())
                 {
-                    // FIXME: Do something.
+                    AlertDialog.Builder builder;
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                        builder = new AlertDialog.Builder(v.getContext(), android.R.style.Theme_Material_Dialog_Alert);
+                    } else {
+                        builder = new AlertDialog.Builder(v.getContext());
+                    }
+
+                    IPhotoStreamClient photoStreamClient = getPhotoStreamClient();
+
+                    builder.setTitle("Delete Comment")
+                            .setMessage("Are you sure you want to delete this comment?")
+                            .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int which) {
+                                    photoStreamClient.deleteComment(comment.getId());
+                                    commentAdapter.remove(comment.getId());
+                                }
+                            })
+                            .setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int which) {
+                                    // do nothing
+                                }
+                            })
+                            .show();
                 }
             }
         });
@@ -172,7 +194,6 @@ public class PhotoDetailActivity extends PhotoStreamActivity implements OnPhotoD
                             }
                         })
                         .show();
-
 
                 return true;
         }
