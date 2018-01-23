@@ -12,4 +12,4 @@ This is a university project to study the basic concepts of Android apps as well
 ## License
 The source code is covered under the terms of the MIT license. Images, third-party source code, third-party libraries and third-party plugins have their individual copyrights, licenses and restrictions.
 
-The MIT license does also NOT cover the content of the gh-pages branch nor the content of the user_stories_und_interaktionsmodell.zip file.
+The MIT license does also NOT cover the content of the gh-pages branch.
